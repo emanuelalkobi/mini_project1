@@ -14,7 +14,6 @@ def get_images_from_user(auth,screen_name):
 	public_tweets = api.home_timeline()
 	for tweet in public_tweets:
     		print tweet.text
-	screen_name='Ibra_official'
 	tweets = api.user_timeline(screen_name,count=200, include_rts=False,exclude_replies=True)
 	last_id = tweets[-1].id 
 	while (True):
@@ -34,7 +33,6 @@ def get_images_from_user(auth,screen_name):
         		file_type = url.split(".")[-1]
 	 		if (file_type=="jpg"):
          			media_files.add(media[0]['media_url'])
-	print media_files
 
 	directory=os.getcwd() +"/"+screen_name
 	print directory
@@ -49,10 +47,9 @@ def get_images_from_user(auth,screen_name):
 	for media_file in media_files:
     		wget.download(media_file,out=directory)
 
-def get_images_main():
+def main(screen_name):
 	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 	auth.set_access_token(access_token, access_token_secret)
-	get_images_from_user(auth,'Ibra_official')
+	get_images_from_user(auth,screen_name)
 
-get_images_main()
 
