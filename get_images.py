@@ -39,12 +39,16 @@ def get_images_from_user(auth,screen_name):
 			print "already exsist"
 	except OSError:
 		print ('Error: Creating directory. ' +  directory)
-
+	deleted=0
 	for index,media_file in enumerate(media_files):
-		media_num=str(index).zfill(5)
+		media_num=str(index-deleted).zfill(5)
 		image_name=directory+"/"+media_num+".jpg"
     		wget.download(media_file,out=image_name)
-
+	        file_st=os.stat(image_name)
+                if (file_st.st_size==0):
+ 	               os.remove(image_name)
+		       deleted=deleted+1
+	
 def main(screen_name):
 	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 	auth.set_access_token(access_token, access_token_secret)

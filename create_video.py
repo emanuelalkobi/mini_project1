@@ -1,4 +1,3 @@
-import subprocess as sp
 import os
 
 def create(screen_name):
