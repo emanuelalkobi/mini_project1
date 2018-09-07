@@ -11,9 +11,6 @@ access_token_secret='WhX3x7aCZ15OF1IaExlG2GkX60WJ7hZT9C7VP3bo2NNvF'
 def get_images_from_user(auth,screen_name):
 	api = tweepy.API(auth)
 
-	public_tweets = api.home_timeline()
-	for tweet in public_tweets:
-    		print tweet.text
 	tweets = api.user_timeline(screen_name,count=200, include_rts=False,exclude_replies=True)
 	last_id = tweets[-1].id 
 	while (True):
@@ -35,7 +32,6 @@ def get_images_from_user(auth,screen_name):
          			media_files.add(media[0]['media_url'])
 
 	directory=os.getcwd() +"/"+screen_name
-	print directory
 	try:
 		if not os.path.exists(directory):
         		os.makedirs(directory)
@@ -44,8 +40,10 @@ def get_images_from_user(auth,screen_name):
 	except OSError:
 		print ('Error: Creating directory. ' +  directory)
 
-	for media_file in media_files:
-    		wget.download(media_file,out=directory)
+	for index,media_file in enumerate(media_files):
+		media_num=str(index).zfill(5)
+		image_name=directory+"/"+media_num+".jpg"
+    		wget.download(media_file,out=image_name)
 
 def main(screen_name):
 	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
