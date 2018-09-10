@@ -11,7 +11,7 @@ def main():
         print "-------------------------------------"
 	print "downloading image from tweeter feed " + screen_name
 	print "-------------------------------------"
-	get_images.main(screen_name)
+	get_images.get_images_from_user(screen_name)
         print "-------------------------------------"
 	print "creating video from images"
 	print "-------------------------------------"

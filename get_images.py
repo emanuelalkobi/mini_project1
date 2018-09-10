@@ -8,10 +8,15 @@ access_token='616177906-wH4yvRqIHlPiifb9o1Q2QxCwIOzCPxlsU6pfIKrH'
 access_token_secret='WhX3x7aCZ15OF1IaExlG2GkX60WJ7hZT9C7VP3bo2NNvF'
 
 
-def get_images_from_user(auth,screen_name):
+def get_images_from_user(screen_name):
+	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+	auth.set_access_token(access_token, access_token_secret)
 	api = tweepy.API(auth)
-
-	tweets = api.user_timeline(screen_name,count=200, include_rts=False,exclude_replies=True)
+        try:
+		tweets = api.user_timeline(screen_name,count=200, include_rts=False,exclude_replies=True)
+	except tweepy.TweepError as e:
+		print e.args[0][0]['message']
+		exit() 
 	last_id = tweets[-1].id 
 	while (True):
 		more_tweets = api.user_timeline(screen_name,count=200,include_rts=False,exclude_replies=True,max_id=last_id-1)
@@ -30,7 +35,7 @@ def get_images_from_user(auth,screen_name):
         		file_type = url.split(".")[-1]
 	 		if (file_type=="jpg"):
          			media_files.add(media[0]['media_url'])
-
+        
 	directory=os.getcwd() +"/"+screen_name
 	try:
 		if not os.path.exists(directory):
@@ -48,10 +53,4 @@ def get_images_from_user(auth,screen_name):
                 if (file_st.st_size==0):
  	               os.remove(image_name)
 		       deleted=deleted+1
-	
-def main(screen_name):
-	auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-	auth.set_access_token(access_token, access_token_secret)
-	get_images_from_user(auth,screen_name)
-
 
