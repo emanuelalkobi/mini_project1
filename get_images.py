@@ -35,7 +35,10 @@ def get_images_from_user(screen_name):
         		file_type = url.split(".")[-1]
 	 		if (file_type=="jpg"):
          			media_files.add(media[0]['media_url'])
-        
+                else:
+			print "There are no jpg images in the user that you insert.\nVideo can not created."
+			exit()
+
 	directory=os.getcwd() +"/"+screen_name
 	try:
 		if not os.path.exists(directory):
@@ -45,6 +48,8 @@ def get_images_from_user(screen_name):
 	except OSError:
 		print ('Error: Creating directory. ' +  directory)
 	deleted=0
+	
+	#remove error images with size equals to 0
 	for index,media_file in enumerate(media_files):
 		media_num=str(index-deleted).zfill(5)
 		image_name=directory+"/"+media_num+".jpg"
