@@ -35,9 +35,9 @@ def get_images_from_user(screen_name):
         		file_type = url.split(".")[-1]
 	 		if (file_type=="jpg"):
          			media_files.add(media[0]['media_url'])
-                else:
-			print "There are no jpg images in the user that you insert.\nVideo can not created."
-			exit()
+	if (len(media_files)==0):      
+		print "There are no jpg images in the user that you insert.\nCan't create video."
+		exit()
 
 	directory=os.getcwd() +"/"+screen_name
 	try:
