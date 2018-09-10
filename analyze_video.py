@@ -9,11 +9,16 @@ def analyze(path):
 
     with io.open(path, 'rb') as movie:
         input_content = movie.read()
-
-    operation = video_client.annotate_video(features=features, input_content=input_content)
-    print('\nProcessing video for label annotations:')
-
-    result = operation.result(timeout=90)
+    try:
+    	operation = video_client.annotate_video(features=features, input_content=input_content)
+    	print('\nProcessing video for label annotations:')
+        result = operation.result(timeout=90)
+    except Exception as e:
+    	print "Video Intelligence error"
+        print e
+        exit()	
+    
+    
     print('\nFinished processing.')
 
     # Process video/segment level label annotations
