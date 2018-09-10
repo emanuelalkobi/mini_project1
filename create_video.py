@@ -1,6 +1,10 @@
 import os
 
 def create(screen_name):
-	command="ffmpeg -r 1/1 -i "+screen_name+"/%05d.jpg -vcodec mpeg4 -y "+screen_name+".mp4"
-	os.system(command)
+	try:
+		command="ffmpeg -r 1/1 -i "+screen_name+"/%05d.jpg -vcodec mpeg4 -y "+screen_name+".mp4"
+		os.system(command)
+	except Exception as e:
+		print e
+		exit()
 
