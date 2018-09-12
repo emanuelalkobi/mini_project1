@@ -11,7 +11,7 @@ def analyze(path):
         input_content = movie.read()
     try:
     	operation = video_client.annotate_video(features=features, input_content=input_content)
-    	print('\nProcessing video for label annotations:')
+    	print('\nProcessing video:')
         result = operation.result(timeout=90)
     except Exception as e:
     	print "Video Intelligence error"
@@ -26,12 +26,10 @@ def analyze(path):
     for i, segment_label in enumerate(segment_labels):
         print('Video label description: {}'.format(segment_label.entity.description))
         for category_entity in segment_label.category_entities:
-            print('\tLabel category description: {}'.format(category_entity.description))
+	    print "Label category description: " +category_entity.description	
 
         for i, segment in enumerate(segment_label.segments):
             confidence = segment.confidence
-            print('\tConfidence: {}'.format(confidence))
-        print('\n')
-    # [END video_analyze_labels]
+            print "The accuracy of the identification in this case is " +str(confidence) + "\n"
 
 
