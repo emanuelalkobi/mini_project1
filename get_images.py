@@ -5,7 +5,7 @@ import wget
 #please insert your own twitter credentials in order to run the script
 consumer_key=''
 consumer_secret=''
-access_token='616177906-'
+access_token=''
 access_token_secret=''
 
 
