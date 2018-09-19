@@ -2,6 +2,7 @@ import sys
 import get_images as get_images
 import create_video as create_video
 import analyze_video as analyze_video
+#this script tuns over python2 version only
 def main():
 	if len(sys.argv) < 2:
     		print("Please  call me with one parameter")
