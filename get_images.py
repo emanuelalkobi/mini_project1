@@ -2,10 +2,11 @@ import tweepy
 import os,sys
 import wget
 
-consumer_key='r18ZDSbis8VbamUKkaxN7qL1q'
-consumer_secret='v8du6LkynyqU9ft9VQeJk9sMPa0E8xGSX1BiaU6HPfk0TnCVJH'
-access_token='616177906-wH4yvRqIHlPiifb9o1Q2QxCwIOzCPxlsU6pfIKrH'
-access_token_secret='WhX3x7aCZ15OF1IaExlG2GkX60WJ7hZT9C7VP3bo2NNvF'
+#please insert your own twitter credentials in order to run the script
+consumer_key=''
+consumer_secret=''
+access_token='616177906-'
+access_token_secret=''
 
 
 def get_images_from_user(screen_name):
