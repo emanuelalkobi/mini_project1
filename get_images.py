@@ -54,7 +54,6 @@ def get_images_from_user(screen_name):
     for index,media_file in enumerate(media_files):
         media_num=str(index-deleted).zfill(5)
         image_name=directory+"/"+media_num+".jpg"
-        print(media_file)
         wget.download(media_file,out=image_name)
         file_st=os.stat(image_name)
         if (file_st.st_size==0):
