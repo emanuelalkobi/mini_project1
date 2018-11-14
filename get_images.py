@@ -17,7 +17,7 @@ def get_images_from_user(screen_name):
         tweets = api.user_timeline(screen_name,count=200,include_rts=False,exclude_replies=True)
     except tweepy.TweepError as e:
         print(e.args[0][0]['message'])
-        exit()
+        return
     last_id = tweets[-1].id
     while (True):
         more_tweets = api.user_timeline(screen_name,count=200,include_rts=False,exclude_replies=True,max_id=last_id-1)
@@ -39,7 +39,7 @@ def get_images_from_user(screen_name):
                 media_files.add(media[0]['media_url'])
     if (len(media_files)==0):
         print("There are no jpg images in the user that you insert.\nCan't create video.")
-        exit()
+        return
 
     directory=os.getcwd() +"/"+screen_name
     try:
