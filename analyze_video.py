@@ -3,6 +3,7 @@ import sys
 from google.cloud import videointelligence
 import io
 import mysql.connector
+import pymongo
 
 def analyze(path,username,img_num):
     video_client = videointelligence.VideoIntelligenceServiceClient()
@@ -47,6 +48,12 @@ def analyze(path,username,img_num):
     mycursor.execute(sql, val)
 
     mydb.commit()
+
+    myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+    mydb = myclient["mydatabase"]
+    mycol = mydb["users"]
+    mydict = { "username": username, "img_num": img_num,"description":desc,"description_num":c }
+    x = mycol.insert_one(mydict)
 
 
 

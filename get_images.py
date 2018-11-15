@@ -19,7 +19,9 @@ def get_images_from_user(screen_name):
         print(e.args[0][0]['message'])
         return
     last_id = tweets[-1].id
-    while (True):
+    c=0
+    while (True and c<1000):
+        c=c+1
         more_tweets = api.user_timeline(screen_name,count=200,include_rts=False,exclude_replies=True,max_id=last_id-1)
 	# There are no more tweets
         if (len(more_tweets) == 0):
@@ -37,6 +39,8 @@ def get_images_from_user(screen_name):
             file_type = url.split(".")[-1]
             if (file_type=="jpg" and (request.status_code==200)):
                 media_files.add(media[0]['media_url'])
+            if (len(media_files)>300):
+                break
     if (len(media_files)==0):
         print("There are no jpg images in the user that you insert.\nCan't create video.")
         return

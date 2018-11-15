@@ -31,7 +31,7 @@ def print_db(mycursor):
         print("There is an average of",str(avg_im/len(myresult)),"images per feed")
     return
 
-def delete_db():
+def delete_db(mycursor):
     mycursor.execute("truncate user_data;")
     return
 
