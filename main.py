@@ -2,24 +2,73 @@ import sys
 import get_images as get_images
 import create_video as create_video
 import analyze_video as analyze_video
-#this script tuns over python2 version only
+import mysql_func as mysql_func
+import mongo_func as mongo_func
+import pymongo
+import mysql.connector
+from statistics import mode
+
+def get_input_num():
+    num=None
+    while num is None:
+        try:
+            num = int(input("Enter a number: "))
+        except ValueError:
+            print("Program halted incorrect data entered,please Enter a number ")
+    return num
+
+
+MYSQL=1
 def main():
-	if len(sys.argv) < 2:
-    		print("Please  call me with one parameter")
-    		sys.exit()
-        screen_name =sys.argv[1]
-	print screen_name
-        print "-------------------------------------"
-	print "downloading image from tweeter feed " + screen_name
-	print "-------------------------------------"
-	get_images.get_images_from_user(screen_name)
-        print "-------------------------------------"
-	print "creating video from images"
-	print "-------------------------------------"
-        create_video.create(screen_name)	
-        print "-------------------------------------"
-	print "analyzing video"
-	print "-------------------------------------"
-	analyze_video.analyze(screen_name+".mp4") 
+   
+    while(1):
+        mydb = mysql.connector.connect(host="localhost",user="root",passwd="qwerasdf",auth_plugin='mysql_native_password')
+        mycursor = mydb.cursor()
+        mycursor.execute("CREATE DATABASE IF NOT EXISTS  mini_project3_db")
+        mycursor.execute("use mini_project3_db")
+        mycursor.execute("CREATE TABLE  IF NOT EXISTS user_data (id INT AUTO_INCREMENT PRIMARY KEY,username VARCHAR(255), img_num VARCHAR(255),description VARCHAR(255),description_num VARCHAR(255))")
+        mycursor.execute("use mini_project3_db")
+        print("------------------------------------------------")
+        print("Menu:\n1.Query new user name\n2.Query exsist user name\n3.See full database \n4.Delete DataBase\n5.Search for a word\n6.Exit")
+        data=get_input_num();
+        
+        if (data==1):
+            #add always to both db,add is at analyze_video
+            mysql_func.add_user(mycursor)
+        elif(data==2):
+            print("Insert a Data Base to query:\n1.MySQL\n2.MongoDB")
+            db = get_input_num()
+            if (db==MYSQL):
+                mysql_func.query_user(mycursor)
+            else:
+                mongo_func.query_user()
+
+        elif(data==3):
+            print("Insert a Data Base to query:\n1.MySQL\n2.MongoDB")
+            db = get_input_num()
+            if (db==MYSQL):
+                mysql_func.print_db(mycursor)
+            else:
+                mongo_func.print_db()
+        elif(data==4):
+            #delete always both sb
+            mysql_func.delete_db(mycursor)
+            mongo_func.delete_db()
+        elif(data==5):
+            print("Insert a Data Base to query:\n1.MySQL\n2.MongoDB")
+            db = get_input_num()
+            if (db==MYSQL):
+                mysql_func.search_word(mycursor)
+            else:
+                mongo_func.search_word()
+
+        elif(data==6):
+            return
+
+
+
+
+
+
 
 main()
